@@ -4,6 +4,7 @@ import Todo from "../components/Todo.js";
 const addTodoPopup = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
+const addTodoButton = document.querySelector(".button_action_add");
 // const todoTemplate = document.querySelector("#todo-template"); ->remove
 const todosList = document.querySelector(".todos__list");
 
