@@ -5,10 +5,10 @@ import Todo from "../components/Todo.js";
 import FormValidator from "../components/FormValidator.js";
 
 const addTodoPopup = document.querySelector("#add-todo-popup");
-const addTodoForm = addTodoPopup.querySelector(".popup__form");
+const addTodoForm = document.forms["add-todo-form"];
+const section = document.querySelector("#todos");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const addTodoButton = document.querySelector(".button_action_add");
-// const todoTemplate = document.querySelector("#todo-template"); ->remove
 const todosList = document.querySelector(".todos__list");
 
 const openModal = (modal) => {
@@ -51,9 +51,17 @@ addTodoForm.addEventListener("submit", (evt) => {
   closeModal(addTodoPopup);
 });
 
-initialTodos.forEach((item) => {
-  const todo = generateTodo(item);
-  todosList.append(todo);
+document.addEventListener("DOMContentLoaded", () => {
+  const section = document.querySelector(".todos");
+
+  const renderTodo = (item) => {
+    const todo = generateTodo(item);
+    section.appendChild(todo);
+  };
+
+  initialTodos.forEach((item) => {
+    renderTodo(item);
+  });
 });
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
