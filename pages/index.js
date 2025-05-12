@@ -10,9 +10,7 @@ import TodoCounter from "../components/TodoCounter.js";
 const addTodoPopupEl = document.querySelector("#add-todo-popup");
 const addTodoForm = document.forms["add-todo-form"];
 //const section = document.querySelector("#todos");
-const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
 const addTodoButton = document.querySelector(".button_action_add");
-const todosList = document.querySelector(".todos__list");
 
 const todoCounter = new TodoCounter(initialTodos, ".counter__text");
 
@@ -32,7 +30,7 @@ const addTodoPopup = new PopupWithForm({
 
     const id = uuidv4();
     const values = { name, date, id };
-    section._renderer(values);
+    renderTodo(values);
     todoCounter.updateTotal(true);
     addTodoPopup.close();
     newTodoValidator.resetValidation();
@@ -41,10 +39,8 @@ const addTodoPopup = new PopupWithForm({
 addTodoPopup.setEventListeners();
 
 function handleDelete(completed) {
-  // decrement total count
   todoCounter.updateTotal(false);
   if (completed) {
-    // Decrement completed count only if todo was completed
     todoCounter.updateCompleted(false);
   }
 }
@@ -57,12 +53,14 @@ function generateTodo(data) {
   return todoElement;
 }
 
+const renderTodo = (item) => {
+  const todoElement = generateTodo(item);
+  section.addItem(todoElement);
+};
+
 const section = new Section({
   items: initialTodos,
-  renderer: (item) => {
-    const todoElement = generateTodo(item);
-    section.addItem(todoElement);
-  },
+  renderer: renderTodo,
   containerSelector: ".todos__list",
 });
 
@@ -76,7 +74,3 @@ addTodoButton.addEventListener("click", () => {
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
-
-function handleTodoDelete(todoId) {
-  console.log(`Todo with ID ${todoId} was deleted`);
-}
